@@ -30,8 +30,6 @@ var app = builder.Build();
 app.UseRouting();
 app.UseOpenSettings(); // Updates instance status when the application is starting or stopping.
 app.UseOpenSettingsSpa(); // Enables OpenSettings Spa page for viewing and editing settings.
-app.UseAuthentication();
-app.UseAuthorization();
 app.MapControllers();
 
 await app.RunAsync();
