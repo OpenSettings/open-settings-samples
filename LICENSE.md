@@ -1,6 +1,6 @@
 # License
 
-By using, you agree to the following license terms:
+By using this repository, you agree to the following license terms:
 
 [OpenSettings License Terms](https://opensettings.net/license)
 
