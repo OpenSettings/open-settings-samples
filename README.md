@@ -4,13 +4,9 @@ Welcome to the **OpenSettings Samples Repository**! This repository contains var
 
 For detailed documentation and integration guides, please refer to the main [OpenSettings documentation](https://opensettings.net/docs).
 
----
-
 ## 📚 Overview
 
 In this repository, you'll find examples of how to integrate **OpenSettings** into your projects. These samples cover a range of scenarios to help you get started quickly and understand how OpenSettings can simplify configuration management in your .NET applications.
-
----
 
 ## 🚀 How to Get Started
 
@@ -31,8 +27,6 @@ To use these samples, follow these steps:
     dotnet restore
     dotnet run
     ```
----
-
 ## 🐞 Issues & Reports
 
 If you encounter any issues or have suggestions, please report them via our GitHub repository.
