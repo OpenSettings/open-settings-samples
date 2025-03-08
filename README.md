@@ -1,6 +1,6 @@
 # OpenSettings Sample Implementations
 
-Welcome to the **OpenSettings Samples Repository**! This repository contains various sample implementations and code snippets demonstrating how to use **OpenSettings** in different scenarios and applications.
+Welcome to the **OpenSettings Samples Repository**! This repository contains various sample implementations and code snippets demonstrating how to use [OpenSettings](https://github.com/OpenSettings/open-settings) in different scenarios and applications.
 
 For detailed documentation and integration guides, please refer to the main [OpenSettings documentation](https://opensettings.net/docs).
 
@@ -33,6 +33,19 @@ To use these samples, follow these steps:
     ```
 ---
 
-## 💬 Feedback & Issues
+## 🐞 Issues & Reports
 
-If you have any questions, issues, or suggestions, feel free to [open an issue](https://github.com/OpenSettings/open-settings-samples/issues). Your feedback is welcome!
+If you encounter any issues or have suggestions, please report them via our GitHub repository.
+
+### How to Report an Issue:
+1. **Search for Existing Issues**: Check if your issue has already been reported in the [Issues section](https://github.com/OpenSettings/open-settings-samples/issues).
+2. **Submit a New Issue**: If not, create a new issue by clicking **"New issue"** on the [Issues page](https://github.com/OpenSettings/open-settings-samples/issues), describing the problem, and including relevant details like steps to reproduce, error messages, and logs.
+
+### Reporting Guidelines:
+- Be specific about the issue, including environment and configuration details.
+- Include relevant error logs or screenshots if available.
+
+### Security Concerns:
+For security-related issues, **do not** use GitHub Issues. Contact us directly at [security@opensettings.net](mailto:security@opensettings.net).
+
+We appreciate your feedback and will address your concerns as soon as possible!
