@@ -6,7 +6,7 @@ For detailed documentation and integration guides, please refer to the main [Ope
 
 ## 📚 Overview
 
-In this repository, you'll find examples of how to integrate **OpenSettings** into your projects. These samples cover a range of scenarios to help you get started quickly and understand how OpenSettings can simplify configuration management in your .NET applications.
+In this repository, you'll find examples of how to integrate **OpenSettings** into your projects. These samples cover a range of scenarios to help you get started quickly and understand how OpenSettings can simplify settings management in your .NET applications.
 
 ## 🚀 How to Get Started
 
