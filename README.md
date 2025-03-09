@@ -8,7 +8,7 @@ For detailed documentation and integration guides, please refer to the main [Ope
 
 In this repository, you'll find examples of how to integrate **OpenSettings** into your projects. These samples cover a range of scenarios to help you get started quickly and understand how OpenSettings can simplify settings management in your .NET applications.
 
-## 🚀 How to Get Started
+## 🚀 Getting Started
 
 To use these samples, follow these steps:
 
@@ -27,6 +27,29 @@ To use these samples, follow these steps:
     dotnet restore
     dotnet run
     ```
+
+## 💡 License  
+
+OpenSettings is licensed under the [OpenSettings License](https://opensettings.net/license).
+
+## 🤝 Contributing
+
+By contributing this repository, you agree to the [Contribution Terms](https://opensettings.net/contribution-terms).
+
+## ❤️ Support & Sponsorship  
+
+Help us keep OpenSettings growing!  
+
+- **[Become a Sponsor](https://opensettings.net/become-a-sponsor)** to support development.  
+- **Join discussions** in GitHub Issues for feature requests and feedback.  
+
+📧 **Contact**: [support@opensettings.net](mailto:support@opensettings.net)  
+
+## 📜 Terms & Privacy  
+
+- **[Terms & Conditions](https://opensettings.net/terms-and-conditions)**  
+- **[Privacy Policy](https://opensettings.net/privacy-policy)**  
+
 ## 🐞 Issues & Reports
 
 If you encounter any issues or have suggestions, please report them via our GitHub repository.
