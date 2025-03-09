@@ -1,4 +1,4 @@
-# OpenSettings Sample Implementations
+# <img src="logo/open-settings-logo.png" alt="Header" width="24"/> OpenSettings Samples
 
 Welcome to the **OpenSettings Samples Repository**! This repository contains various sample implementations and code snippets demonstrating how to use [OpenSettings](https://github.com/OpenSettings/open-settings) in different scenarios and applications.
 
@@ -43,3 +43,7 @@ If you encounter any issues or have suggestions, please report them via our GitH
 For security-related issues, **do not** use GitHub Issues. Contact us directly at [security@opensettings.net](mailto:security@opensettings.net).
 
 We appreciate your feedback and will address your concerns as soon as possible!
+
+<br>
+
+✨ *OpenSettings makes settings management simple, powerful, and flexible!* 🚀
