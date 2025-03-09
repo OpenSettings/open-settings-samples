@@ -30,7 +30,7 @@ To use these samples, follow these steps:
 
 ## 💡 License  
 
-OpenSettings is licensed under the [OpenSettings License](https://opensettings.net/license).
+Licensed under the [OpenSettings License](https://opensettings.net/license).
 
 ## 🤝 Contributing
 
