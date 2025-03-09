@@ -43,3 +43,7 @@ If you encounter any issues or have suggestions, please report them via our GitH
 For security-related issues, **do not** use GitHub Issues. Contact us directly at [security@opensettings.net](mailto:security@opensettings.net).
 
 We appreciate your feedback and will address your concerns as soon as possible!
+
+<br>
+
+✨ *OpenSettings makes settings management simple, powerful, and flexible!* 🚀
