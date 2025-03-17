@@ -2,7 +2,7 @@
 
 namespace OpenSettings.Api
 {
-    public class MyFirstSetting : ISettings
+    public class MyFirstSettings : ISettings
     {
         public string Name { get; set; }
 

@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{OpenSettings.Helper.GetEnvironmentName()}.json", optional: true)
+    .AddJsonFile($"appsettings.{OpenSettings.Helpers.Helper.GetEnvironmentName()}.json", optional: true)
     .Build();
 
 var openSettingsProviderConfiguration = GetOpenSettingsConfiguration(configuration);
