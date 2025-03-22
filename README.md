@@ -1,5 +1,8 @@
 # <img src="logo/open-settings-logo.png" alt="Header" width="24"/> OpenSettings Samples
 
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://docs.opensettings.net)
+[![GitHub](https://img.shields.io/badge/•-open--settings-blue?logo=github)](https://github.com/OpenSettings/open-settings)
+
 Welcome to the **OpenSettings Samples Repository**! This repository contains various sample implementations and code snippets demonstrating how to use [OpenSettings](https://github.com/OpenSettings/open-settings) in different scenarios and applications.
 
 For detailed documentation and integration guides, please refer to the main [OpenSettings documentation](https://opensettings.net/docs).
