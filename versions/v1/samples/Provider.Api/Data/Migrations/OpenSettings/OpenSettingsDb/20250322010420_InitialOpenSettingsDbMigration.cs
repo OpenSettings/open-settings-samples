@@ -641,7 +641,6 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AllowAnonymousAccess = table.Column<bool>(type: "bit", nullable: false),
                     StoreInSeparateFile = table.Column<bool>(type: "bit", nullable: false),
                     IgnoreIndividualStoreInSeparateFile = table.Column<bool>(type: "bit", nullable: false),
                     IgnoreOnFileChange = table.Column<bool>(type: "bit", nullable: false),
@@ -734,6 +733,7 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     ComputedIdentifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SerializerType = table.Column<int>(type: "int", nullable: false),
                     CompressionType = table.Column<int>(type: "int", nullable: false),
                     CompressionLevel = table.Column<int>(type: "int", nullable: false),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -743,8 +743,11 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     IgnoreOnFileChange = table.Column<bool>(type: "bit", nullable: true),
                     RegistrationMode = table.Column<int>(type: "int", nullable: false),
                     IsDraft = table.Column<bool>(type: "bit", nullable: false),
+                    IsCopied = table.Column<bool>(type: "bit", nullable: false),
+                    CopiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdentifierId = table.Column<int>(type: "int", nullable: false),
                     AppId = table.Column<int>(type: "int", nullable: false),
+                    CopiedFromId = table.Column<int>(type: "int", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
@@ -766,6 +769,11 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         principalTable: "Identifiers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Settings_Settings_CopiedFromId",
+                        column: x => x.CopiedFromId,
+                        principalTable: "Settings",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Settings_Users_CreatedById",
                         column: x => x.CreatedById,
@@ -824,6 +832,7 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    SerializerType = table.Column<int>(type: "int", nullable: false),
                     CompressionType = table.Column<int>(type: "int", nullable: false),
                     CompressionLevel = table.Column<int>(type: "int", nullable: false),
                     Version = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -1093,6 +1102,11 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 table: "Settings",
                 columns: new[] { "AppId", "IdentifierId", "ComputedIdentifier" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Settings_CopiedFromId",
+                table: "Settings",
+                column: "CopiedFromId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Settings_CreatedById",

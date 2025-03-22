@@ -12,7 +12,7 @@ using OpenSettings.Domains.Sql.DataContext;
 namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
 {
     [DbContext(typeof(OpenSettingsDbContext))]
-    [Migration("20250301222034_InitialOpenSettingsDbMigration")]
+    [Migration("20250322010420_InitialOpenSettingsDbMigration")]
     partial class InitialOpenSettingsDbMigration
     {
         /// <inheritdoc />
@@ -236,9 +236,6 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("AllowAnonymousAccess")
-                        .HasColumnType("bit");
 
                     b.Property<int>("AppId")
                         .HasColumnType("int");
@@ -651,6 +648,9 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         .IsConcurrencyToken()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int>("SerializerType")
+                        .HasColumnType("int");
+
                     b.Property<int>("SettingId")
                         .HasColumnType("int");
 
@@ -700,6 +700,12 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     b.Property<Guid>("ComputedIdentifier")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CopiedFromId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CopiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
@@ -721,6 +727,9 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     b.Property<bool?>("IgnoreOnFileChange")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsCopied")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDraft")
                         .HasColumnType("bit");
 
@@ -730,6 +739,9 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("SerializerType")
+                        .HasColumnType("int");
 
                     b.Property<bool>("StoreInSeparateFile")
                         .HasColumnType("bit");
@@ -744,6 +756,8 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CopiedFromId");
 
                     b.HasIndex("CreatedById");
 
@@ -1419,6 +1433,10 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OpenSettings.Domains.Sql.Entities.SettingSqlModel", "CopiedFrom")
+                        .WithMany()
+                        .HasForeignKey("CopiedFromId");
+
                     b.HasOne("OpenSettings.Domains.Sql.Entities.UserSqlModel", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -1434,6 +1452,8 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         .HasForeignKey("UpdatedById");
 
                     b.Navigation("App");
+
+                    b.Navigation("CopiedFrom");
 
                     b.Navigation("CreatedBy");
 
