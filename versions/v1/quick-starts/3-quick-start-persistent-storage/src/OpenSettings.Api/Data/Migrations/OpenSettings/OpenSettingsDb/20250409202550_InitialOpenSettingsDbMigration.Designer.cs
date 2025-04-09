@@ -12,7 +12,7 @@ using OpenSettings.Domains.Sql.DataContext;
 namespace OpenSettings.Api.Data.Migrations.OpenSettings.OpenSettingsDb
 {
     [DbContext(typeof(OpenSettingsDbContext))]
-    [Migration("20250322010522_InitialOpenSettingsDbMigration")]
+    [Migration("20250409202550_InitialOpenSettingsDbMigration")]
     partial class InitialOpenSettingsDbMigration
     {
         /// <inheritdoc />
@@ -243,6 +243,9 @@ namespace OpenSettings.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     b.Property<string>("Consumer")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Controller")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
@@ -273,6 +276,9 @@ namespace OpenSettings.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Spa")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("StoreInSeparateFile")
                         .HasColumnType("bit");

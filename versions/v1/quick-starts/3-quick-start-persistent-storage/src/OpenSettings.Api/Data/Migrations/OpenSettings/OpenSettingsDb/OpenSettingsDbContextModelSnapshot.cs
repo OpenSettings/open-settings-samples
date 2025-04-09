@@ -240,6 +240,9 @@ namespace OpenSettings.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     b.Property<string>("Consumer")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Controller")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
@@ -270,6 +273,9 @@ namespace OpenSettings.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Spa")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("StoreInSeparateFile")
                         .HasColumnType("bit");

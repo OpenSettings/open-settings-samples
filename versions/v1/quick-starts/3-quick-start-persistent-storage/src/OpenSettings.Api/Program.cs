@@ -22,7 +22,6 @@ var app = builder.Build();
 
 app.UseRouting();
 app.UseOpenSettings(); // Updates instance status when the application is starting or stopping.
-app.UseOpenSettingsSpa(); // Enables OpenSettings Spa page for viewing and editing settings.
 app.MapControllers();
 
 await app.RunAsync();
@@ -33,12 +32,12 @@ static OpenSettingsConfiguration GetOpenSettingsConfiguration(IConfiguration con
 {
     var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
-    var settingsServiceConfiguration = configuration.GetSection(nameof(OpenSettingsConfiguration)).Get<OpenSettingsConfiguration>();
+    var openSettingsConfiguration = configuration.GetSection(nameof(OpenSettingsConfiguration)).Get<OpenSettingsConfiguration>();
 
-    settingsServiceConfiguration.Provider.Orm.ConfigureDbContext = optsBuilder =>
+    openSettingsConfiguration.Provider.Orm.ConfigureDbContext = optsBuilder =>
     {
         optsBuilder.UseSqlServer(configuration["SqlServerConnectionString"], opts => opts.MigrationsAssembly(migrationsAssembly));
     };
 
-    return settingsServiceConfiguration;
+    return openSettingsConfiguration;
 }
