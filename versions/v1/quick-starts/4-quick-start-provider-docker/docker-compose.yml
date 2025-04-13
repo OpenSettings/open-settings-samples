@@ -1,0 +1,28 @@
+services:
+  opensettings:
+    image: opensettings/open-settings:${IMG_VERSION}
+    container_name: container-open-settings
+    volumes:
+      - ./opensettings/OpenSettings-License.key:/app/OpenSettings-License.key
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
+      - ASPNETCORE_URLS=http://+:${INTERNAL_PORT}
+#      - OPENSETTINGS_Configuration__DbProviderName=MySql
+#      - OPENSETTINGS_Configuration__ConnectionString=Server=host.docker.internal;Port=3306;Database=OpenSettings;Uid=root;Pwd=${DB_PASSWORD}
+
+#      - OPENSETTINGS_Configuration__DbProviderName=Oracle
+#      - OPENSETTINGS_Configuration__ConnectionString=Data Source=host.docker.internal:1521/XE;User Id=system;Password=${DB_PASSWORD}
+
+#      - OPENSETTINGS_Configuration__DbProviderName=PostgreSql
+#      - OPENSETTINGS_Configuration__ConnectionString=Server=host.docker.internal;Port=5432;Database=OpenSettings;User Id=postgres;Password=${DB_PASSWORD}
+
+      - OPENSETTINGS_Configuration__DbProviderName=Sqlite
+      - OPENSETTINGS_Configuration__ConnectionString=Data Source=OpenSettings.db
+
+#      - OPENSETTINGS_Configuration__DbProviderName=SqlServer
+#      - OPENSETTINGS_Configuration__ConnectionString=Server=host.docker.internal,1433;Database=OpenSettings;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True
+
+#      - OPENSETTINGS_Configuration__DbProviderName=InMemory
+#      - OPENSETTINGS_Configuration__ConnectionString=OpenSettings
+    ports:
+      - "${EXTERNAL_PORT}:${INTERNAL_PORT}"
