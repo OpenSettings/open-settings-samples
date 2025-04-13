@@ -21,7 +21,7 @@ If you've previously pulled the `opensettings/open-settings:latest` image and .e
 To make sure you're using the most up-to-date image, run:
 
 ```bash
-docker-compose pulll
+docker-compose pull
 ```
 
 🔗 You can also check available image versions at:  
