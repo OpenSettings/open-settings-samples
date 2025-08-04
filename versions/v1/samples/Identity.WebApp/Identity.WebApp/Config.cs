@@ -36,8 +36,8 @@ public static class Config
                 ClientId = "web",
                 ClientSecrets = { new Secret("secret".Sha256())},
                 AllowedGrantTypes = GrantTypes.Code,
-                RedirectUris = { "http://localhost:5002/signin-oidc" },
-                PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc"},
+                RedirectUris = { "http://localhost:5288/signin-oidc" },
+                PostLogoutRedirectUris = { "http://localhost:5288/signout-callback-oidc"},
                 AllowOfflineAccess = true,
                 AlwaysIncludeUserClaimsInIdToken = true,
                 AllowedScopes = new List<string>()
