@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Ogu.AspNetCore.Compressions;
-using OpenSettings.AspNetCore;
+using OpenSettings.AspNetCore.Extensions;
 using System.IO.Compression;
 
 namespace Provider.Api
@@ -42,19 +42,7 @@ namespace Provider.Api
 
             services.AddSwaggerGen(opts => opts.SwaggerDoc("v1", new OpenApiInfo { Title = "Provider.Api" }));
 
-            services.AddControllers().AddOpenSettingsController(Configuration, opts => 
-            {
-                opts.Authorize = true;
-                opts.AllowFromExploring = true;
-                opts.OAuth2Options = new OAuth2Options
-                {
-                    Authority = "https://localhost:5001",
-                    ClientId = "web",
-                    ClientSecret = "secret",
-                    AllowOfflineAccess = true,
-                    IsActive = true
-                };
-            }).AddJsonOptions(opts =>
+            services.AddControllers().AddOpenSettingsController(Configuration).AddJsonOptions(opts =>
             {
                 //opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
@@ -73,7 +61,6 @@ namespace Provider.Api
             app.UseSwagger();
             app.UseSwaggerUI(opts => opts.SwaggerEndpoint("/swagger/v1/swagger.json", "Provider.Api v1"));
             app.UseOpenSettings();
-            app.UseOpenSettingsSpa();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());

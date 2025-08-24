@@ -1,4 +1,5 @@
 using OpenSettings.AspNetCore;
+using OpenSettings.AspNetCore.Extensions;
 using OpenSettings.Configurations;
 using OpenSettings.Extensions;
 using OpenSettings.Models;
@@ -26,7 +27,7 @@ builder.Services
 var app = builder.Build();
 
 app.UseRouting();
-app.UseOpenSettings(); // Updates instance status when the application is starting or stopping.
+app.UseOpenSettings(); // Updates instance status when the application starts or stops & serve OpenSettings Spa.
 app.MapControllers();
 
 await app.RunAsync();

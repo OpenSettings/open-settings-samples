@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using OpenSettings.AspNetCore;
+using OpenSettings.AspNetCore.Extensions;
 using OpenSettings.Configurations;
 using OpenSettings.Extensions;
 using OpenSettings.Models;
@@ -15,7 +15,7 @@ var openSettingsProviderConfiguration = new OpenSettingsConfiguration(ServiceTyp
 
 openSettingsProviderConfiguration.Provider.Orm.ConfigureDbContext = optsBuilder =>
 {
-    // Configure your database provider here. (e.g. UseSqlServer, UseNpgsql, UseInMemoryDatabase)
+    // Configure your database provider here. (e.g. UseSqlServer, UseNpgsql, UseInMemoryDatabase) - this requires db migration as well. See https://docs.opensettings.net/v1/docs/quick-start-persistent-storage.html
     optsBuilder.UseInMemoryDatabase("OpenSettings");
 };
 
@@ -28,8 +28,7 @@ builder.Services
 var app = builder.Build();
 
 app.UseRouting();
-app.UseOpenSettings(); // Updates instance status when the application is starting or stopping.
-app.UseOpenSettingsSpa(); // Enables OpenSettings Spa page for viewing and editing settings.
+app.UseOpenSettings(); // Updates instance status when the application starts or stops & serve OpenSettings Spa.
 app.MapControllers();
 
 await app.RunAsync();

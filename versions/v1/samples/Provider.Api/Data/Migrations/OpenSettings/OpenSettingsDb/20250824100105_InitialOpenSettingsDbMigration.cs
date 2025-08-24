@@ -12,6 +12,28 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "DataProtectionKeys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KeyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MasterKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FriendlyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Xml = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EncryptionAlgorithm = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ValidationAlgorithm = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActivationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DataProtectionKeys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Licenses",
                 columns: table => new
                 {
@@ -45,11 +67,34 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 {
                     Key = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Owner = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locks", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProviderRegistries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClientIdLowercase = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    InstanceDynamicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Scheme = table.Column<int>(type: "int", nullable: false),
+                    Host = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Port = table.Column<int>(type: "int", nullable: false),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PackVersion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastHeartbeatOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProviderRegistries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,20 +156,28 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AuthScheme = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OAuthProvider = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProviderId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AuthType = table.Column<int>(type: "int", nullable: false),
+                    IdentityProvider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExternalId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailLowercase = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UsernameLowercase = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HashedPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NameLowercase = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GivenName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GivenNameLowercase = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FamilyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FamilyNameLowercase = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullNameLowercase = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Slug = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Initials = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Locale = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastLogin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsEmailVerified = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -167,6 +220,42 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "GlobalConfigurations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    KeyLowercase = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdentifierId = table.Column<int>(type: "int", nullable: true),
+                    SerializerType = table.Column<int>(type: "int", nullable: false),
+                    CompressionType = table.Column<int>(type: "int", nullable: false),
+                    CompressionLevel = table.Column<int>(type: "int", nullable: false),
+                    Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GlobalConfigurations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GlobalConfigurations_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_GlobalConfigurations_Users_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Identifiers",
                 columns: table => new
                 {
@@ -195,6 +284,47 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                         column: x => x.UpdatedById,
                         principalTable: "Users",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LoginEntries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Issuer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Audience = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProviderRegistryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RemoteIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AuthType = table.Column<int>(type: "int", nullable: false),
+                    AuthMethod = table.Column<int>(type: "int", nullable: false),
+                    AccessToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccessTokenExpiryDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiryDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Scopes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsSuccessful = table.Column<bool>(type: "bit", nullable: false),
+                    Metadata = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoginEntries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoginEntries_ProviderRegistries_ProviderRegistryId",
+                        column: x => x.ProviderRegistryId,
+                        principalTable: "ProviderRegistries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_LoginEntries_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -496,6 +626,49 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "GlobalConfigurationHistories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    KeyLowercase = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdentifierId = table.Column<int>(type: "int", nullable: true),
+                    SerializerType = table.Column<int>(type: "int", nullable: false),
+                    CompressionType = table.Column<int>(type: "int", nullable: false),
+                    CompressionLevel = table.Column<int>(type: "int", nullable: false),
+                    Version = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    GlobalConfigurationId = table.Column<int>(type: "int", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RestoredOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RestoredById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GlobalConfigurationHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GlobalConfigurationHistories_GlobalConfigurations_GlobalConfigurationId",
+                        column: x => x.GlobalConfigurationId,
+                        principalTable: "GlobalConfigurations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GlobalConfigurationHistories_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_GlobalConfigurationHistories_Users_RestoredById",
+                        column: x => x.RestoredById,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserGroupNotificationMappings",
                 columns: table => new
                 {
@@ -649,6 +822,8 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     IgnoreIndividualRegistrationMode = table.Column<bool>(type: "bit", nullable: false),
                     Consumer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Provider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Controller = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Spa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdentifierId = table.Column<int>(type: "int", nullable: false),
                     AppId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -696,8 +871,9 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     DynamicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Urls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PackVersion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RemoteIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MachineName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Environment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReloadStrategies = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -829,8 +1005,7 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 name: "SettingHistories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     SerializerType = table.Column<int>(type: "int", nullable: false),
                     CompressionType = table.Column<int>(type: "int", nullable: false),
@@ -839,10 +1014,10 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                     Slug = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     SettingId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RestoredOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RestoredById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -979,6 +1154,50 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurationHistories_CreatedById",
+                table: "GlobalConfigurationHistories",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurationHistories_GlobalConfigurationId",
+                table: "GlobalConfigurationHistories",
+                column: "GlobalConfigurationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurationHistories_RestoredById",
+                table: "GlobalConfigurationHistories",
+                column: "RestoredById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurationHistories_Slug_GlobalConfigurationId",
+                table: "GlobalConfigurationHistories",
+                columns: new[] { "Slug", "GlobalConfigurationId" },
+                unique: true,
+                filter: "[Slug] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurationHistories_Version",
+                table: "GlobalConfigurationHistories",
+                column: "Version");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurations_CreatedById",
+                table: "GlobalConfigurations",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurations_KeyLowercase_ClientId_IdentifierId",
+                table: "GlobalConfigurations",
+                columns: new[] { "KeyLowercase", "ClientId", "IdentifierId" },
+                unique: true,
+                filter: "[KeyLowercase] IS NOT NULL AND [ClientId] IS NOT NULL AND [IdentifierId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GlobalConfigurations_UpdatedById",
+                table: "GlobalConfigurations",
+                column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Identifiers_CreatedById",
                 table: "Identifiers",
                 column: "CreatedById");
@@ -1045,6 +1264,31 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 filter: "[ReferenceIdLowercase] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LoginEntries_CreatedOn",
+                table: "LoginEntries",
+                column: "CreatedOn");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoginEntries_ProviderRegistryId",
+                table: "LoginEntries",
+                column: "ProviderRegistryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoginEntries_StateId",
+                table: "LoginEntries",
+                column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoginEntries_StateId_AuthMethod_CreatedOn_IsSuccessful",
+                table: "LoginEntries",
+                columns: new[] { "StateId", "AuthMethod", "CreatedOn", "IsSuccessful" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoginEntries_UserId",
+                table: "LoginEntries",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_CreatedById",
                 table: "Notifications",
                 column: "CreatedById");
@@ -1053,6 +1297,21 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 name: "IX_Notifications_UpdatedById",
                 table: "Notifications",
                 column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProviderRegistries_ClientIdLowercase",
+                table: "ProviderRegistries",
+                column: "ClientIdLowercase");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProviderRegistries_LastHeartbeatOn",
+                table: "ProviderRegistries",
+                column: "LastHeartbeatOn");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProviderRegistries_Type",
+                table: "ProviderRegistries",
+                column: "Type");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SettingClasses_CreatedById",
@@ -1274,6 +1533,12 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
                 name: "Configurations");
 
             migrationBuilder.DropTable(
+                name: "DataProtectionKeys");
+
+            migrationBuilder.DropTable(
+                name: "GlobalConfigurationHistories");
+
+            migrationBuilder.DropTable(
                 name: "Instances");
 
             migrationBuilder.DropTable(
@@ -1281,6 +1546,9 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
 
             migrationBuilder.DropTable(
                 name: "Locks");
+
+            migrationBuilder.DropTable(
+                name: "LoginEntries");
 
             migrationBuilder.DropTable(
                 name: "SettingClasses");
@@ -1314,6 +1582,12 @@ namespace Provider.Api.Data.Migrations.OpenSettings.OpenSettingsDb
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "GlobalConfigurations");
+
+            migrationBuilder.DropTable(
+                name: "ProviderRegistries");
 
             migrationBuilder.DropTable(
                 name: "Settings");
